@@ -171,3 +171,75 @@ module.exports.getall = function (req, res, next) {
         });
     });
 };
+
+module.exports.update = function (req, res, next) {
+    var valid = req.body._id && req.body.title && Validations.isString(req.body.title);
+    if (!valid) {
+        return res.status(422).json({
+            err: null,
+            msg: 'title is a required field.',
+            data: null
+        });
+    }
+
+    User.findById(req.decodedToken.user._id).exec(function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        if (!user || !user.isAdmin) {
+            return res
+                .status(404)
+                .json({ err: null, msg: 'User not an Admin.', data: null });
+        }
+        Event.findByIdAndUpdate(req.body._id, req.body, { new: true }).exec(function (err, updatedEvent) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            if (!updatedEvent) {
+                return res
+                    .status(404)
+                    .json({ err: null, msg: 'Event not found.', data: null });
+            }
+            res.status(201).json({
+                err: null,
+                msg: 'Event Updated',
+                data: updatedEvent.toObject()
+            });
+        });
+    });
+};
+
+
+module.exports.delete = function (req, res, next) {
+    var valid = req.body._id;
+    if (!valid) {
+        return res.status(422).json({
+            err: null,
+            msg: '_id is a required field.',
+            data: null
+        });
+    }
+
+    User.findById(req.decodedToken.user._id).exec(function (err, user) {
+        if (err) {
+            return next(err);
+        }
+        if (!user || !user.isAdmin) {
+            return res
+                .status(404)
+                .json({ err: null, msg: 'User not an Admin.', data: null });
+        }
+        Event.findByIdAndDelete(req.body._id).exec(function (err, deletedEvent) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            res.status(201).json({
+                err: null,
+                msg: 'Event deleted',
+                data: deletedEvent.toObject()
+            });
+        });
+    });
+};

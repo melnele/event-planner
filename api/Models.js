@@ -29,7 +29,13 @@ var eventSchema = mongoose.Schema({
   },
   startDate: Date,
   endDate: Date,
-  location: String
+  location: String,
+  username: {
+    type: String,
+    required: [true, 'UserName field is required'],
+    trim: true,
+    lowercase: true
+  }
 });
 
 if (!userSchema.options.toObject) {

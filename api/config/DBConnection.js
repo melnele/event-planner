@@ -2,17 +2,19 @@ var mongoose = require('mongoose'),
   config = require('../config'),
   dburl = config.MONGO_URI;
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
 // CAPTURE APP TERMINATION / RESTART EVENTS
 // To be called when process is restarted or terminated
-var gracefulShutdown = function(callback) {
-  mongoose.connection.close(function(err) {
+var gracefulShutdown = function (callback) {
+  mongoose.connection.close(function (err) {
     callback(err);
   });
 };
 
 // For app termination
-process.on('SIGINT', function() {
-  gracefulShutdown(function(err) {
+process.on('SIGINT', function () {
+  gracefulShutdown(function (err) {
     if (err) {
       return console.error(err);
     }
@@ -22,8 +24,8 @@ process.on('SIGINT', function() {
 });
 
 // For Heroku app termination
-process.on('SIGTERM', function() {
-  gracefulShutdown(function(err) {
+process.on('SIGTERM', function () {
+  gracefulShutdown(function (err) {
     if (err) {
       return console.error(err);
     }
@@ -32,12 +34,12 @@ process.on('SIGTERM', function() {
   });
 });
 
-mongoose.connect(dburl, function(err) {
+mongoose.connect(dburl, function (err) {
   if (!err) {
     return console.log('Successfully connected to the database');
   }
   console.error(err);
-  gracefulShutdown(function(err) {
+  gracefulShutdown(function (err) {
     if (err) {
       return console.error(err);
     }

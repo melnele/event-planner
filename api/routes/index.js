@@ -32,4 +32,7 @@ var isAuthenticated = function (req, res, next) {
 router.post('/login', controller.login);
 router.post('/events/add', isAuthenticated, controller.add);
 router.get('/events/getall', isAuthenticated, controller.getall);
+router.patch('/events/update', isAuthenticated, controller.update);
+router.delete('/events/delete', isAuthenticated, controller.delete);
+
 module.exports = router;
