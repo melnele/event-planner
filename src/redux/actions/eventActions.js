@@ -12,7 +12,7 @@ export const getEvents = () => (dispatch, getState) => {
     if (token) {
         config.headers["authorization"] = token;
     }
-    Axios.get('/events/getall', config).then(res => {
+    Axios.get('/api/events/getall', config).then(res => {
         dispatch({
             type: GET_EVENTS,
             payload: res.data.data
