@@ -140,6 +140,7 @@ module.exports.add = function (req, res, next) {
                 .status(404)
                 .json({ err: null, msg: 'User not an Admin.', data: null });
         }
+        req.body.username = req.decodedToken.user.username;
         Event.create(req.body, function (err, newEvent) {
             if (err) {
                 console.log(err);
@@ -155,19 +156,29 @@ module.exports.add = function (req, res, next) {
 };
 
 module.exports.getall = function (req, res, next) {
-    Event.find().exec(function (err, events) {
+    User.findById(req.decodedToken.user._id).exec(function (err, user) {
         if (err) {
             return next(err);
         }
-        if (!events) {
+        if (!user || !user.isAdmin) {
             return res
                 .status(404)
-                .json({ err: null, msg: 'Events not found.', data: null });
+                .json({ err: null, msg: 'User not an Admin.', data: null });
         }
-        res.status(200).json({
-            err: null,
-            msg: 'Events retrieved successfully.',
-            data: events
+        Event.find().exec(function (err, events) {
+            if (err) {
+                return next(err);
+            }
+            if (!events) {
+                return res
+                    .status(404)
+                    .json({ err: null, msg: 'Events not found.', data: null });
+            }
+            res.status(200).json({
+                err: null,
+                msg: 'Events retrieved successfully.',
+                data: events
+            });
         });
     });
 };

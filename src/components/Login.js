@@ -35,20 +35,17 @@ class Login extends Component {
     return (
       <form style={{ textAlign: "center", justifyContent: "center", margin: "auto" }}>
         <h1>Sign In</h1>
-        <input
-          type="text" placeholder="Username"
-          onChange={(event) => { this.updateUsername(event.target.value) }}
-          value={this.state.username}
-        />
-        <br></br>
-        <input
-          type="password" placeholder="Password"
-          password={this.state.password}
-          onChange={(event) => { this.updatePassword(event.target.value) }}
-        />
-        <br></br>
-        <br></br>
-        <input className="btn btn-info" type="button" value="Sign In" onClick={() => { this.signin() }} />
+        <div className="form-group">
+          <label for="username">Username:</label>
+          <input className="form-control" name="username" id="username" type="text" value={this.state.username}
+            onChange={(event) => { this.updateUsername(event.target.value) }} />
+        </div>
+        <div className="form-group">
+          <label for="password">Password:</label>
+          <input className="form-control" id="password" name="password" type="password" password={this.state.password}
+            onChange={(event) => { this.updatePassword(event.target.value) }} />
+        </div>
+        <input className="btn btn-primary" type="button" value="Sign In" onClick={() => { this.signin() }} />
       </form>
     )
   }

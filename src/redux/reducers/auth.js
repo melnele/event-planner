@@ -11,6 +11,7 @@ export default function (state = initialState, action) {
             sessionStorage.setItem('token', action.payload)
             return {
                 ...state,
+                token: action.payload,
                 isAuthenticated: true
             }
         case LOGOUT:

@@ -24,9 +24,7 @@ var eventSchema = mongoose.Schema({
     required: [true, 'title field is required'],
     type: String
   },
-  text: {
-    type: String
-  },
+  description: String,
   startDate: Date,
   endDate: Date,
   location: String,
