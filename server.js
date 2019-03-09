@@ -26,8 +26,8 @@ app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());
 
-// var distDir = __dirname + "/build/";
-// app.use(express.static(distDir));
+var distDir = __dirname + "/build/";
+app.use(express.static(distDir));
 
 app.use(
   bodyParser.urlencoded({
