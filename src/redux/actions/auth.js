@@ -7,7 +7,7 @@ export const login = (username, password) => dispatch => {
             'Content-Type': 'application/json',
         }
     };
-    axios.post('http://localhost:8080/api/login', JSON.stringify({ username, password }), config)
+    axios.post('/api/login', JSON.stringify({ username, password }), config)
         .then(res => {
             dispatch({
                 type: AUTH_SUCCESS,
