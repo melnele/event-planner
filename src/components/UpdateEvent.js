@@ -10,8 +10,8 @@ class UpdateEvent extends Component {
         this.state = {
             title: this.props.event.title ? this.props.event.title : "",
             description: this.props.event.description ? this.props.event.description : "",
-            startDate: this.props.event.startDate ? this.props.event.startDate : new Date(),
-            endDate: this.props.event.endDate ? this.props.event.endDate : new Date(),
+            startDate: this.props.event.startDate ? Date.parse(this.props.event.startDate) : new Date(),
+            endDate: this.props.event.endDate ? Date.parse(this.props.event.endDate) : new Date(),
             location: this.props.event.location ? this.props.event.location : ""
         };
         this.handleChange = this.handleChange.bind(this);
@@ -31,7 +31,7 @@ class UpdateEvent extends Component {
 
     handletendtimeChange(date) {
         this.setState({
-            endtDate: date
+            endDate: date
         });
     }
 

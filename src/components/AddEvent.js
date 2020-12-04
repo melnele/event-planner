@@ -31,7 +31,7 @@ class AddEvent extends Component {
 
   handletendtimeChange(date) {
     this.setState({
-      endtDate: date
+      endDate: date
     });
   }
 

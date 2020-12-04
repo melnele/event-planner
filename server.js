@@ -11,8 +11,8 @@ var express = require('express'),
 
 app.set('secret', config.SECRET);
 var server = app.listen(process.env.PORT || 8080, function () {
-    var port = server.address().port;
-    console.log("App now running on port", port);
+  var port = server.address().port;
+  console.log("App now running on port", port);
 });
 app.use(logger(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use(
@@ -22,7 +22,7 @@ app.use(
     methods: ['GET', 'POST', 'PATCH', 'DELETE']
   })
 );
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(compression());
 app.use(bodyParser.json());
 
@@ -37,7 +37,7 @@ app.use(
 app.use('/api', routes);
 
 // 500 internal server error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   if (err.statusCode === 404) return next();
   res.status(500).json({
     // Never leak the stack trace of the err if running in production mode
@@ -48,7 +48,7 @@ app.use(function(err, req, res, next) {
 });
 
 // 404 error handler
-app.use(function(req, res) {
+app.use(function (req, res) {
   res.status(404).json({
     err: null,
     msg: '404 Not Found',
