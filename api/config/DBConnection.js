@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
 // CAPTURE APP TERMINATION / RESTART EVENTS
 // To be called when process is restarted or terminated
 var gracefulShutdown = function (callback) {
